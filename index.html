@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="esES">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario 2º DAW</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <header class="cabecera">
+        <a onclick="renderizarPagina('horario')" style="cursor: pointer;"><img src="img/logo.png" alt="Arangoya"
+                class="logo"></a>
+        <nav class="items-menu-container">
+            <ul>
+                <li><button onclick="renderizarPagina('horario')">Horario</button></li>
+                <li><button onclick="renderizarPagina('notas')">Notas</button></li>
+                <li><button onclick="renderizarPagina('apuntes')">Tareas</button></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="horario-section">
+        <div class="table-container">
+            <table>
+                <tr style="font-weight: bold;">
+                    <th></th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miercoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                </tr>
+                <tr>
+                    <th>08:30 - 09:25</th>
+                    <td style="color:red;">Optativa</td>
+                    <td style="color:purple;">Desarrollo Web Servidor</td>
+                    <td style="color:purple;">Desarrollo Web Cliente</td>
+                    <td style="color:purple;">Desarrollo Web Cliente</td>
+                    <td style="color:green;">Sistemas Informaticos</td>
+                </tr>
+                <tr>
+                    <th>09:25 - 10:20</th>
+                    <td style="color:red;">Optativa</td>
+                    <td style="color:purple;">Desarrollo Web Servidor</td>
+                    <td style="color:purple;">Desarrollo Web Cliente</td>
+                    <td style="color:purple;">Desarrollo Web Servidor</td>
+                    <td>Introd. Ciberseguridad</td>
+                </tr>
+                <tr>
+                    <th>10:20 - 11:15</th>
+                    <td style="color:aquamarine;">IPE II</td>
+                    <td style="color:purple;">Desarrollo Web Servidor</td>
+                    <td style="color:purple;">Desarrollo Web Cliente</td>
+                    <td style="color:purple;">Desarrollo Web Servidor</td>
+                    <td>Diseño Interfaces Web</td>
+                </tr>
+                <tr>
+                    <th>11:15 - 11:45</th>
+                    <td colspan="5" style="text-align: center; 
+                    background-color: yellow;font-weight: bold;">RECREO</td>
+                </tr>
+                <tr>
+                    <th>11:45 - 12:40</th>
+                    <td style="color:green;">Sistemas Informaticos</td>
+                    <td style="color:green;">Sistemas Informaticos</td>
+                    <td style="color:purple;">Diseño Interfaces Web</td>
+                    <td style="color:green;">Sistemas Informaticos</td>
+                    <td style="color:aquamarine;">IPE II</td>
+                </tr>
+                <tr>
+                    <th>12:40 - 13:35</th>
+                    <td style="color:purple;">Desarrollo Web Cliente</td>
+                    <td style="color:purple;">Desarrollo Web Servidor</td>
+                    <td style="color:purple;">Desarrollo Web Cliente</td>
+                    <td style="color:brown;">Diseño Interfaces</td>
+                    <td style="color:purple;">Desarrollo Web Cliente</td>
+                </tr>
+                <tr>
+                    <th>13:35 - 14:30</th>
+                    <td style="color:aqua;">Introd. Ciberseguridad</td>
+                    <td style="color:aquamarine;">IPE II</td>
+                    <td style="color:aqua;">Despliegue Apps</td>
+                    <td style="color:brown;">Diseño Interfaces Web</td>
+                    <td style="color:aqua;">Despliegue Apps</td>
+                </tr>
+            </table>
+        </div>
+        <div class="horarioFooter">
+            <div class="nombres-container">
+                <ul>
+                    <li style="color:red;">Ander Gonzalez - ander.gonzalez@arangoya.net</li>
+                    <li style="color:green;">Alberto Souissi - alberto.souissi@arangoya.net</li>
+                    <li style="color:purple;">Aritz Pardo - aritz.pardo@arangoya.net</li>
+                    <li style="color:aqua;">Eneko Hernando - eneko.hernando@arangoya.net</li>
+                    <li style="color:brown;">Pedro Gutierrez - pedro.gutierrez@arangoya.net</li>
+                    <li style="color:aquamarine;">Mikel Lizarraga - mikel.lizarraga@arangoya.net</li>
+                    <li style="color:chartreuse;">Kevin Cifuentes - kevin.cifuentes@arangoya.net</li>
+                </ul>
+            </div>
+
+            <div id="seccionHora">
+                <div id="horaContainer" class="horaContainer">
+
+
+                    <img src="./public/img/fuera_time.gif" id="imgHoras" alt="descansa" width="auto" height="150">
+                    <h2 id="tituloHoras">Descansando!</h2>
+                    <p>Quedan <span id="marcador"></span> para la siguiente clase</p>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Seccion entera de apuntes-->
+    <section id="apuntes-section">
+        <div class="asignaturasContainer" id="asignaturasContainer"></div>
+        <form id="formTareas">
+            <div class="form-container">
+                <div id="titulo-select" class="titulo-select">
+                    <button type="button" id="btn-volver" class="btn-volver">Volver</button>
+
+                    <h1 style="color:#fff;">Tareas</h1>
+
+                    <div id="tareas-select"></div>
+                </div>
+                <div id="tareas-alta">
+                    <div class="asignatura-label">
+                        <label for="inputNombre" style="color:white;">Asignatura:</label>
+                        <select id="inputNombre" name="inputNombre">
+                            <option value="Desarrollo web cliente" label="Desarrollo web cliente"></option>
+                            <option value="Desarrollo web servidor" label="Desarrollo web servidor"></option>
+                            <option value="Diseño de interfaces" label="Diseño de interfaces"></option>
+                            <option value="Despliegue de aplicaciones" label="Despliegue de aplicaciones"></option>
+                        </select>
+                    </div>
+                    <div class="asignatura-label">
+                        <label style="color:white;">Fecha:</label>
+                        <input type="date" id="inputFecha" name="inputFecha" placeholder="Fatal error nooorrl" />
+                    </div>
+                    <div class="asignatura-label">
+                        <label style="color:white;">Nombre de tarea:</label>
+                        <input type="text" id="labelTarea" name="labelTarea" placeholder="Fatal error nooorrl" />
+                    </div>
+                    <div class="descripcion-label">
+                        <label style="color:white;">Tareas: </label>
+                        <input type="text" id="inputTarea" name="inputTarea" />
+                    </div>
+                    <div class="button-container">
+                        <button type="submit">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <!--Seccion entera de notas-->
+
+    <section id="notas-section" class="notas-seccion">
+
+        <h1>PROXIMAMENTE</h1>
+
+    </section>
+
+    <!-- Dialog para guardar tarea-->
+    <dialog id="myDialog">
+        <div class="dialogContent">
+            <h2>Suerte aventurero</h2>
+            <img src="./public/img/tareaComplet.gif" alt="supongo que animo?" width="200" height="200">
+            <p>Tarea guardada con exito✅</p>
+        </div>
+    </dialog>
+
+
+</body>
+<script src="js/index.js"></script>
+<script src="./public/js/front.js"></script>
+
+<script>
+
+</script>
+
+</html>
