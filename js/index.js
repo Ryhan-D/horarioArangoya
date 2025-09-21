@@ -49,7 +49,7 @@ app.post('/api/tareas/subir', (req, res) => {
 
 
 
-    const { inputNombre,labelTarea, inputFecha,inputTarea } = req.body;
+    const { inputNombre, labelTarea, inputFecha, inputTarea } = req.body;
 
     if (!inputNombre) {
         res.status(400).json({ message: 'El nombre de la asignatura es obligatorio' });
@@ -58,7 +58,7 @@ app.post('/api/tareas/subir', (req, res) => {
     try {
         const sql = 'INSERT INTO tareas (nombre_asignatura,label_tarea,nombre_tarea,fecha) VALUES (?, ?, ?, ?)';
 
-        connection.query(sql, [inputNombre,labelTarea, inputTarea, inputFecha], (err, results) => {
+        connection.query(sql, [inputNombre, labelTarea, inputTarea, inputFecha], (err, results) => {
             if (err) {
                 console.error('Error al insertar tarea:', err);
                 return res.status(500).send('Error interno del servidor al insertar la tarea.');
@@ -126,7 +126,31 @@ app.get('/api/tareas/nombres', (req, res) => {
     })
 })
 
+app.delete('/api/tareas/:id', (req, res) => {
+    const id = req.params.id;
+
+    if (!id && isNaN(parseInt(id))) {
+        res.status(400).send("ID de tarea inválido o faltante");
+        return;
+    }
+
+    connection.query('delete from tareas where id = ?', [id], (err,results) => {
+        if (err) {
+            console.error('error al borrar tarea: ' + err);
+            res.status(500).send("error al borrar la consulta");
+            return;
+        }
+
+        // Verificar si realmente se eliminó algo
+        if (results.affectedRows === 0) {
+            res.status(404).send("Tarea no encontrada");
+            return;
+        }
+        console.log('tarea borrada');
+        res.status(200).send('tarea borrada');
+    })
 
 
+})
 
 

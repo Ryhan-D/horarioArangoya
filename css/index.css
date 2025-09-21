@@ -249,7 +249,21 @@ button {
   justify-content: center;
   align-items: center;
 }
+.btn-eliminar {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
 
+.btn-eliminar:hover {
+    background: #ff3838;
+    transform: scale(1.05);
+}
 .button-container button {
   border-radius: 10px;
   height: 50px;

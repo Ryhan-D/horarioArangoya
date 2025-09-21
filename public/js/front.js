@@ -15,7 +15,33 @@ function init() {
 
 init();
 
+function eliminarTareas(idTarea, nombreAsignatura) {
 
+    if (!idTarea) {
+        alert('ID de tarea no válido');
+        return;
+    }
+
+
+    if (!confirm('¿Seguro que quieres eliminar esta tarea?')) {
+        return;
+    }
+
+    fetch(`http://localhost:3000/api/tareas/${idTarea}`, { method: 'DELETE' })
+        .then(response => {
+            if (response.ok) {
+                console.log("Tarea eliminada");
+                cargarTareas();
+                verTareas(nombreAsignatura);
+
+            } else {
+
+                console.log("error al borrar");
+            }
+        })
+        .catch(error => console.error('Error al borrar: ', error));
+
+}
 
 function cargarTareas() {
 
@@ -109,6 +135,11 @@ function verTareas(nombreAsignatura) {
                     <div class="task-header" onclick="esconderContenidoTarea(this)">
                         <div class="task-info">
                             <h3 class="task-title">${item.label_tarea}</h3>
+                             <button type="button" data-id="${item.id}" 
+                            class="btn-eliminar" 
+                            title="Eliminar tarea">
+                        🗑️
+                    </button>
                             <div class="task-date">
                                 <svg class="date-icon" viewBox="0 0 24 24">
                                     <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
@@ -116,7 +147,7 @@ function verTareas(nombreAsignatura) {
                                 ${fechaFormateada}
                                  <p style="color:${Math.sign(diasFaltantesFinal) === -1 ?
                         'red' : '#355749'};font-size:18px;font-weight:bold;">${Math.sign(diasFaltantesFinal) === -1 ?
-                           ( Math.abs(diasFaltantesFinal) + mensajeDias + ' de retraso') : ( Math.abs(diasFaltantesFinal) + mensajeDias + (mensajeDias === ' Dias' ? ' restantes' : ' restante'))} 
+                            (Math.abs(diasFaltantesFinal) + mensajeDias + ' de retraso') : (Math.abs(diasFaltantesFinal) + mensajeDias + (mensajeDias === ' Dias' ? ' restantes' : ' restante'))} 
 
                             </div>
                         </div>
@@ -131,6 +162,12 @@ function verTareas(nombreAsignatura) {
                         </div>
                     </div>
                 `;
+                const btnEliminar = card.querySelector('.btn-eliminar');
+                btnEliminar.addEventListener('click', (e) => {
+                    e.stopPropagation(); //para que no expanda la tarea
+                    const id = e.target.dataset.id;
+                    eliminarTareas(id, nombreAsignatura);
+                });
                 seccionAsignatura.appendChild(card);
             });
         }
