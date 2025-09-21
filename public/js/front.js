@@ -46,6 +46,48 @@ function cargarTareas() {
         .catch(error => console.error('Error:', error));
 }
 
+// Función para toggle del contenido de las tarjetas
+function esconderContenidoTarea(header) {
+    const taskCard = header.closest('.tarea-card');
+    const content = taskCard.querySelector('.task-content');
+    const icon = header.querySelector('.expand-icon');
+
+    // Toggle classes
+    content.classList.toggle('expanded');
+    icon.classList.toggle('expanded');
+
+    // Add animation effect
+    if (content.classList.contains('expanded')) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+    } else {
+        content.style.maxHeight = '0px';
+    }
+}
+
+function comprobarCantidadDias(fecha) {
+    const fechaTarea = new Date(fecha);
+    const fechaActual = new Date();
+    const milisegundosEnUnDia = 1000 * 60 * 60 * 24;
+    const diasRestantes = (fechaTarea - fechaActual) / milisegundosEnUnDia;
+
+    return diasRestantes ? diasRestantes : 'N/D';
+
+}
+function formatearFecha(fecha) {
+
+    if (!fecha) return 'Sin fecha';
+
+    const dateActual = new Date();
+    const añosFuncionamiento = [2025, 2026];
+    const date = new Date(fecha);
+    const opciones = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    return ((date.getFullYear() === añosFuncionamiento[0]) || (date.getFullYear() === añosFuncionamiento[1])) ? date.toLocaleDateString('es-Es', opciones) : 'Sin fecha';
+
+}
 function verTareas(nombreAsignatura) {
     const url = `http://localhost:3000/api/tareas/buscar?nombreAsignatura=${encodeURIComponent(nombreAsignatura)}`;
 
@@ -55,17 +97,42 @@ function verTareas(nombreAsignatura) {
         .then(data => {
             const seccionAsignatura = document.getElementById('tareas-select');
             seccionAsignatura.innerHTML = '';
-            seccionAsignatura.innerHTML = '';
 
             data.forEach(item => {
+                const fechaFormateada = formatearFecha(item.fecha);
+                const diasFaltantes = comprobarCantidadDias(item.fecha);
+                const diasFaltantesFinal = diasFaltantes === 'N/D' ? 'N/D' : Math.round(diasFaltantes);
+                const mensajeDias = Math.abs(diasFaltantesFinal) > 1 ? ' Dias' : ' Dia';
                 const card = document.createElement('div');
-                card.className = 'asignatura-card';
+                card.className = 'tarea-card';
                 card.innerHTML = `
-                <h2>'${item.label_tarea}'</h2>
-                <p>'${item.fecha}'<p>
-`;
-                seccionAsignatura.appendChild(card)
-            })
+                    <div class="task-header" onclick="esconderContenidoTarea(this)">
+                        <div class="task-info">
+                            <h3 class="task-title">${item.label_tarea}</h3>
+                            <div class="task-date">
+                                <svg class="date-icon" viewBox="0 0 24 24">
+                                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                                </svg>
+                                ${fechaFormateada}
+                                 <p style="color:${Math.sign(diasFaltantesFinal) === -1 ?
+                        'red' : '#355749'};font-size:18px;font-weight:bold;">${Math.sign(diasFaltantesFinal) === -1 ?
+                           ( Math.abs(diasFaltantesFinal) + mensajeDias + ' de retraso') : ( Math.abs(diasFaltantesFinal) + mensajeDias + (mensajeDias === ' Dias' ? ' restantes' : ' restante'))} 
+
+                            </div>
+                        </div>
+                        <svg class="expand-icon" viewBox="0 0 24 24">
+                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                        </svg>
+                    </div>
+                    <div class="task-content">
+                        <div class="task-description">
+                            <h4>Descripción de la tarea:</h4>
+                            ${item.nombre_tarea || 'Sin descripción disponible'}
+                        </div>
+                    </div>
+                `;
+                seccionAsignatura.appendChild(card);
+            });
         }
         )
         .catch(error => console.error('error: ', error));

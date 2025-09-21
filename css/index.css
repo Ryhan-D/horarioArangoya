@@ -267,3 +267,143 @@ button {
   justify-content: center;
   min-height: 100%;
 }
+
+/* Estilos para las tarjetas de tareas mejoradas */
+.task-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    margin: 10px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    color: white;
+    border: none;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.task-header {
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.task-info {
+    flex: 1;
+}
+
+.task-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #fff;
+}
+
+.task-date {
+    font-size: 0.9em;
+    color: #e0e7ff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.date-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    color:#fff;
+}
+
+.expand-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+    fill: #fff;
+}
+
+.expand-icon.expanded {
+    transform: rotate(180deg);
+}
+
+.task-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.task-content.expanded {
+    max-height: 300px;
+    padding: 20px;
+}
+
+.task-description {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #60a5fa;
+}
+
+.task-description h4 {
+    margin: 0 0 10px 0;
+    color: #bfdbfe;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Diferentes colores para diferentes asignaturas */
+.task-card.desarrollo-cliente {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.task-card.desarrollo-servidor {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.task-card.diseno-interfaces {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.task-card.despliegue {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+/* Actualizar el contenedor de tareas-select para mejor presentación */
+#tareas-select {
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* Scrollbar personalizado para el contenedor de tareas */
+#tareas-select::-webkit-scrollbar {
+    width: 6px;
+}
+
+#tareas-select::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+#tareas-select::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+#tareas-select::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
